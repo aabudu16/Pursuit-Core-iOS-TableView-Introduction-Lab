@@ -5,11 +5,13 @@ struct Task {
         case notStarted
         case inProgress
         case completed
+        
     }
     
     let name: String
     let status: Status
-    let dueDate: Date    
+    let dueDate: Date
+    
     
     static var allTasks: [Task] {
         let dateFormatter = DateFormatter()
@@ -63,5 +65,6 @@ struct Task {
                  dueDate: dateFormatter.date(from: "04-13-2020")!),
         ]
     }
+    
 
 }
