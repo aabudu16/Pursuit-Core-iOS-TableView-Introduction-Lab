@@ -14,6 +14,7 @@ struct TaskArray {
     var inProgressArray:[Task] = []
     var completed:[Task] = []
     
+    
     mutating func populateArraysWithTasks(from newTasks: [Task] = Task.allTasks){
         
         for task in newTasks{

@@ -5,6 +5,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var task = Task.allTasks
     var taskArray = TaskArray()
+
     
 
     override func viewDidLoad() {
@@ -64,7 +65,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return ""
         }
     }
-
+//turns on the eding function of a tableView
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    //allows for the removal and reloaction of a cell/row
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+   
+        let item = taskArray.notStartedArray[sourceIndexPath.row]
+        taskArray.notStartedArray.remove(at: sourceIndexPath.row)
+        taskArray.notStartedArray.insert(item, at: destinationIndexPath.row)
+    }
+    //allows the screen to switch from editing to not editing
+    @IBAction func editing(_ sender: UIButton) {
+        tableView.isEditing = !tableView.isEditing
+    }
+    
+    @IBAction func sorting(_ sender: UIButton) {
+        var accending = true
+        
+        switch accending{
+        case true:
+            taskArray.notStartedArray = taskArray.notStartedArray.sorted(by: {$0.dueDate < $1.dueDate})
+            taskArray.inProgressArray = taskArray.inProgressArray.sorted(by: {$0.dueDate < $1.dueDate})
+            taskArray.completed = taskArray.completed.sorted(by: {$0.dueDate < $1.dueDate})
+            accending = false
+            
+            sender.titleLabel?.text = "Sort Decending"
+        case false:
+            taskArray.notStartedArray = taskArray.notStartedArray.sorted(by: {$0.dueDate > $1.dueDate})
+            taskArray.inProgressArray = taskArray.inProgressArray.sorted(by: {$0.dueDate > $1.dueDate})
+            taskArray.completed = taskArray.completed.sorted(by: {$0.dueDate > $1.dueDate})
+            accending = true
+            sender.titleLabel?.text = "Sort Accending"
+        }
+    }
     
     @IBOutlet var tableView: UITableView!
     
